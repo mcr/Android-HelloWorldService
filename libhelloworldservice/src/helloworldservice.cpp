@@ -18,6 +18,8 @@
 #include <unistd.h>
 
 
+const android::String16 IHelloWorldService::descriptor("org.credil.helloworldservice.HelloWorldServiceInterface");
+
 class BpHelloWorldService: public android::BpInterface<IHelloWorldService>
 {
 public:
@@ -29,7 +31,7 @@ public:
 
 void HelloWorldService::instantiate() {
 	android::defaultServiceManager()->addService(
-		android::String16("helloworld.codec"), new HelloWorldService());
+                IHelloWorldService::descriptor, new HelloWorldService());
 }
 
 HelloWorldService::HelloWorldService()
@@ -49,7 +51,6 @@ HelloWorldService::~HelloWorldService()
  * NAME = helloworld.codec
  *
  */
-const android::String16 IHelloWorldService::descriptor("helloworld.codec");
 android::String16 IHelloWorldService::getInterfaceDescriptor() const {             
         return IHelloWorldService::descriptor;                                
 }
