@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="call_button">Call</string>
-  <string name="hello">Hello World, DialMirror!</string>
-  <string name="app_name">VideoPhone</string>
-  <string name="enter_sip_address_label">Enter SIP address to call:</string>
-  <string name="sip_descriptor">sip://</string>
-  <string name="hangup">Hangup</string>
+  
+  
+  <string name="app_name">HelloWorldService</string>
+  
+  
+  
 
-  <string name="call">Call</string>
+  
 
-<string name="service_crashed">VideoPhoneService has crashed (check logs).</string>
-<string name="service_wont_start">Can't start the VideoPhoneService (check logs).</string>
-<string name="service_wont_stop_sending">Problem stopping camera transmission</string>
-<string name="service_connected">VideoPhoneService ready!</string>
-<string name="call_stopped">Call stopped; something has become unavailable</string>
+
+
+
+
+
 </resources>
