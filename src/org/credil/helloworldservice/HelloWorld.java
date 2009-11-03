@@ -49,6 +49,10 @@ public class HelloWorld extends Activity {
             }
         };
 
+        // I think it should really be:
+        //bindService(ServiceManager.getService("org.credilk..."),
+        //            serviceConnection, ???):
+
         bindService(new Intent("org.credil.helloworldservice.HelloWorldServiceInterface.START_SERVICE"),
                     serviceConnection, Context.BIND_AUTO_CREATE);
         */
