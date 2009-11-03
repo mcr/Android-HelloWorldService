@@ -21,8 +21,8 @@ int main(int argc, char *argv[])
 {
 	HelloWorldService::instantiate();
 	android::ProcessState::self()->startThreadPool();
-	android::IPCThreadState::self()->joinThreadPool();
 	LOGI("Hello Service is now ready");
-	
+
+	android::IPCThreadState::self()->joinThreadPool();
 	return(0);
 }
