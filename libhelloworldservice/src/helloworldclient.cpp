@@ -67,29 +67,4 @@ android::sp<IHelloWorldClient> IHelloWorldClient::asInterface(const android::sp<
         return intr;                                                    
 }                                                                   
 
-#define CHECK_INTERFACE(interface, data, reply) \
-        do { if (!data.enforceInterface(interface::getInterfaceDescriptor())) { \
-            LOGW("Call incorrectly routed to " #interface); \
-            return android::PERMISSION_DENIED;              \
-        } } while (0)
-
-android::status_t BnHelloWorldClient::onTransact(
-        uint32_t code,
-        const android::Parcel& data,
-        android::Parcel* reply,
-        uint32_t flags)
-{
-        switch(code) {
-        case HW_HELLOTHERE: {
-                CHECK_INTERFACE(IHelloWorldClient, data, reply);
-                const char *str;
-                str = data.readCString();
-                /* hellothere(str); */
-                printf("hello: %s\n", str);
-                return android::NO_ERROR;
-        } break;
-        default:
-                return BBinder::onTransact(code, data, reply, flags);
-        }
-}
 

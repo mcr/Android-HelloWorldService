@@ -41,6 +41,12 @@ HelloWorldService::~HelloWorldService()
     LOGE("HelloWorldService destroyed");
 }
 
+#define CHECK_INTERFACE(interface, data, reply) \
+        do { if (!data.enforceInterface(interface::getInterfaceDescriptor())) { \
+            LOGW("Call incorrectly routed to " #interface); \
+            return android::PERMISSION_DENIED;              \
+        } } while (0)
+
 android::status_t HelloWorldService::onTransact(uint32_t code,
                                                 const android::Parcel &data,
                                                 android::Parcel *reply,
@@ -48,6 +54,20 @@ android::status_t HelloWorldService::onTransact(uint32_t code,
 {
         LOGE("OnTransact(%u,%u)", code, flags);
         
+        switch(code) {
+        case HW_HELLOTHERE: {
+                CHECK_INTERFACE(IHelloWorldService, data, reply);
+                const char *str;
+                str = data.readCString();
+                /* hellothere(str); */
+                LOGE("hello: %s\n", str);
+                printf("hello: %s\n", str);
+                return android::NO_ERROR;
+        } break;
+        default:
+                return BBinder::onTransact(code, data, reply, flags);
+        }
+
         return android::NO_ERROR;
 }
 
