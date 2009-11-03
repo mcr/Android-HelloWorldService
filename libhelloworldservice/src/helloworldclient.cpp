@@ -46,25 +46,4 @@ public:
  * NAME = "org.credil.helloworldservice.HelloWorldServiceInterface"
  *
  */
-const android::String16 IHelloWorldClient::descriptor(HELLOWORLD_NAME);
-
-android::String16 IHelloWorldClient::getInterfaceDescriptor() const {
-        return IHelloWorldClient::descriptor;
-}
-
-android::sp<IHelloWorldClient> IHelloWorldClient::asInterface(const android::sp<android::IBinder>& obj)
-{                                                                   
-	android::sp<IHelloWorldClient> intr;                                          
-        if (obj != NULL) {
-     		intr = static_cast<IHelloWorldClient*>(
-			obj->queryLocalInterface(
-				IHelloWorldClient::descriptor).get());
-		
-		if (intr == NULL) {                                         
-			intr = new BpHelloWorldClient(obj);
-		}                                                           
-        }                                                               
-        return intr;                                                    
-}                                                                   
-
-
+android_IMPLEMENT_META_INTERFACE(HelloWorldClient, HELLOWORLD_NAME)

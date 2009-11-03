@@ -3,33 +3,48 @@
 
 #define HELLOWORLD_NAME "org.credil.helloworldservice.HelloWorldServiceInterface"
 
+/*
+ * These are repeats of macros found in utils/IInterface.h.
+ * the version there, does not use the proper namespace, so you have
+ * to write them in "android" namespace.
+ */
+
+#define android_DECLARE_META_INTERFACE(INTERFACE)                               \
+        static const android::String16 descriptor;                      \
+        static android::sp<I##INTERFACE> asInterface(const android::sp<android::IBinder>& obj); \
+        virtual android::String16 getInterfaceDescriptor() const;       \
+
+#define android_IMPLEMENT_META_INTERFACE(INTERFACE, NAME)                       \
+        const android::String16 I##INTERFACE::descriptor(NAME);         \
+        android::String16 I##INTERFACE::getInterfaceDescriptor() const { \
+        return I##INTERFACE::descriptor;                                \
+    }                                                                   \
+        android::sp<I##INTERFACE> I##INTERFACE::asInterface(const android::sp<android::IBinder>& obj) \
+    {                                                                   \
+            android::sp<I##INTERFACE> intr;                             \
+        if (obj != NULL) {                                              \
+            intr = static_cast<I##INTERFACE*>(                          \
+                obj->queryLocalInterface(                               \
+                        I##INTERFACE::descriptor).get());               \
+            if (intr == NULL) {                                         \
+                intr = new Bp##INTERFACE(obj);                          \
+            }                                                           \
+        }                                                               \
+        return intr;                                                    \
+    }                                                                   \
+
+
+
 enum {
         HW_HELLOTHERE=1,
 };
 
 
-class HelloWorldService;
-
 class IHelloWorldClient: public android::IInterface {
 public:
-// expand macro DECLARE_META_INTERFACE
-	static const android::String16 descriptor;
-	static android::sp<IHelloWorldClient> asInterface(const android::sp<android::IBinder>& obj);   
-	virtual android::String16 getInterfaceDescriptor() const;
+        android_DECLARE_META_INTERFACE(HelloWorldClient)   // no trailing ;
 
         virtual void hellothere(const char *str) = 0;
 };
-
-class BnHelloWorldClient : public android::BnInterface<IHelloWorldClient> 
-{
-public:
-        virtual android::status_t    onTransact( uint32_t code,
-                                    const android::Parcel& data,
-                                    android::Parcel* reply,
-                                    uint32_t flags = 0);
-
-        /* void hellothere(const char *str); */
-};
-
 
 #endif
