@@ -11,20 +11,22 @@
 
 #include <utils/Log.h>
 
-class HelloWorldService;
+#include "helloworld.h"
 
 class IHelloWorldService: public android::IInterface {
 public:
 // expand macro DECLARE_META_INTERFACE
 	static const android::String16 descriptor;
 	static android::sp<IHelloWorldService> asInterface(const android::sp<android::IBinder>& obj);   
-	virtual android::String16 getInterfaceDescriptor() const;
-};
+	static android::String16 getInterfaceDescriptor();
 
+        void hellothere(const char *str);
+};
 
 class BnHelloWorldService : public android::BnInterface<IHelloWorldService>
 {
 	// not sure.
+        // actual dispatch.
 };
 
 class HelloWorldService : public BnHelloWorldService
@@ -41,6 +43,11 @@ public:
 
                             HelloWorldService();
     virtual                 ~HelloWorldService();
+
+    android::status_t onTransact(uint32_t code,
+                                 const android::Parcel &data,
+                                 android::Parcel *reply,
+                                 uint32_t flags);
 
     mutable     android::Mutex                       mLock;
     android::SortedVector< android::wp<Client> >     mClients;
