@@ -7,11 +7,11 @@
 #define android_DECLARE_META_INTERFACE(INTERFACE)                               \
         static const android::String16 descriptor;                      \
         static android::sp<I##INTERFACE> asInterface(const android::sp<android::IBinder>& obj); \
-        virtual android::String16 getInterfaceDescriptor() const;       \
+        static android::String16 getInterfaceDescriptor();              \
 
 #define android_IMPLEMENT_META_INTERFACE(INTERFACE, NAME)                       \
         const android::String16 I##INTERFACE::descriptor(NAME);         \
-        android::String16 I##INTERFACE::getInterfaceDescriptor() const { \
+        android::String16 I##INTERFACE::getInterfaceDescriptor() { \
         return I##INTERFACE::descriptor;                                \
     }                                                                   \
         android::sp<I##INTERFACE> I##INTERFACE::asInterface(const android::sp<android::IBinder>& obj) \

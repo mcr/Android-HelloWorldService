@@ -15,10 +15,8 @@
 
 class IHelloWorldService: public android::IInterface {
 public:
-// expand macro DECLARE_META_INTERFACE
-	static const android::String16 descriptor;
-	static android::sp<IHelloWorldService> asInterface(const android::sp<android::IBinder>& obj);   
-	static android::String16 getInterfaceDescriptor();
+
+        android_DECLARE_META_INTERFACE(HelloWorldService)
 
         void hellothere(const char *str);
 };
