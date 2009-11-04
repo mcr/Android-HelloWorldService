@@ -29,6 +29,7 @@ public:
                 : android::BpInterface<IHelloWorldClient>(impl)
         {
         }
+
                 
         void hellothere(const char *str)
         {
@@ -37,13 +38,7 @@ public:
                 data.writeCString(str);
                 remote()->transact(HW_HELLOTHERE, data, &reply, android::IBinder::FLAG_ONEWAY);
         }
+
 };
 
-
-/* From MACRO IMPLEMENT_META_INTERFACE() */
-/*
- * INTERFACE = HelloWorldClient
- * NAME = "org.credil.helloworldservice.HelloWorldServiceInterface"
- *
- */
 android_IMPLEMENT_META_INTERFACE(HelloWorldClient, HELLOWORLD_NAME)
