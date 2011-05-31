@@ -13,6 +13,7 @@
 
 #include "helloworld.h"
 
+namespace android {
 class BnHelloWorldService : public android::BnInterface<IHelloWorldClient>
 {
 	// not sure.
@@ -45,5 +46,6 @@ public:
     int32_t                     mNextConnId;
 };
 
+}
 
 #endif

@@ -18,13 +18,19 @@
 
 #include <unistd.h>
 
+namespace android {
+
 void HelloWorldService::instantiate() {
 	android::defaultServiceManager()->addService(
                 IHelloWorldClient::descriptor, new HelloWorldService());
 }
-void HelloWorldService::hellothere(const char *str){
 
+void HelloWorldService::hellothere(const char *str){
+                /* hellothere(str); */
+                LOGE("hello: %s\n", str);
+                printf("hello: %s\n", str);
 }
+
 HelloWorldService::HelloWorldService()
 {
     LOGE("HelloWorldService created");
@@ -53,9 +59,7 @@ android::status_t HelloWorldService::onTransact(uint32_t code,
         case HW_HELLOTHERE: {
                 android_CHECK_INTERFACE(IHelloWorldClient, data, reply);
                 android::String16 str = data.readString16();
-                /* hellothere(str); */
-                LOGE("hello: %s\n", android::String8(str).string());
-                printf("hello: %s\n", android::String8(str).string());
+                hellothere(android::String8(str).string());
                 return android::NO_ERROR;
         } break;
         default:
@@ -65,3 +69,4 @@ android::status_t HelloWorldService::onTransact(uint32_t code,
         return android::NO_ERROR;
 }
 
+}

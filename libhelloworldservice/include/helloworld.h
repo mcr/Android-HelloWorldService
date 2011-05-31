@@ -8,7 +8,7 @@
 
 #include "android-IInterface.h"
 
-
+namespace android {
 
 class IHelloWorldClient: public android::IInterface {
 protected:
@@ -22,5 +22,5 @@ public:
         virtual void hellothere(const char *str) = 0;
 };
 
-
+}
 #endif

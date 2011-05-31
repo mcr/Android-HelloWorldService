@@ -20,7 +20,7 @@
 
 #include <unistd.h>
 
-
+namespace android {
 
 class BpHelloWorldClient: public android::BpInterface<IHelloWorldClient>
 {
@@ -42,3 +42,5 @@ public:
 };
 
 android_IMPLEMENT_META_INTERFACE(HelloWorldClient, HELLOWORLD_NAME)
+
+};

@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 
         android::sp<android::IServiceManager> sm = android::defaultServiceManager();
         android::sp<android::IBinder> binder;
-        android::sp<IHelloWorldClient> shw;
+        android::sp<android::IHelloWorldClient> shw;
 
         do {
                 binder = sm->getService(android::String16(HELLOWORLD_NAME));
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 
 	LOGI("Hello client is now trying");
 
-        shw = android::interface_cast<IHelloWorldClient>(binder);
+        shw = android::interface_cast<android::IHelloWorldClient>(binder);
         shw->hellothere("fun");
 	
 	LOGI("Hello client is now exiting");
