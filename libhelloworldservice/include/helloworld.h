@@ -7,14 +7,14 @@
 
 namespace android {
 
-class IHelloWorldClient: public android::IInterface {
+class IHelloWorldInterface: public android::IInterface {
 protected:
     enum {
             HW_HELLOTHERE=  android::IBinder::FIRST_CALL_TRANSACTION
     };
 
 public:
-        DECLARE_META_INTERFACE(HelloWorldClient)   // no trailing ;
+        DECLARE_META_INTERFACE(HelloWorldInterface)   // no trailing ;
 
         virtual void hellothere(const char *str) = 0;
 };

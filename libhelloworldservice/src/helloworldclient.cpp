@@ -22,11 +22,11 @@
 
 namespace android {
 
-class BpHelloWorldClient: public BpInterface<IHelloWorldClient>
+class BpHelloWorldInterface: public BpInterface<IHelloWorldInterface>
 {
 public:
-        BpHelloWorldClient(const sp<IBinder>& impl)
-                : BpInterface<IHelloWorldClient>(impl)
+        BpHelloWorldInterface(const sp<IBinder>& impl)
+                : BpInterface<IHelloWorldInterface>(impl)
         {
         }
 
@@ -41,7 +41,8 @@ public:
 
 };
 
-IMPLEMENT_META_INTERFACE(HelloWorldClient, HELLOWORLD_NAME);
+/* TODO move this code to the generifc header */
+IMPLEMENT_META_INTERFACE(HelloWorldInterface, HELLOWORLD_NAME);
 
 
 };

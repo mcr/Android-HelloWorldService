@@ -15,7 +15,7 @@
 
 namespace android {
 
-class BnHelloWorldService : public android::BnInterface<IHelloWorldClient>
+class BnHelloWorldService : public android::BnInterface<IHelloWorldInterface>
 {
 	// not sure.
         // actual dispatch.
