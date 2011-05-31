@@ -15,13 +15,8 @@ protected:
 
 public:
         DECLARE_META_INTERFACE(HelloWorldInterface)   // no trailing ;
-
         virtual void hellothere(const char *str) = 0;
 };
-
-
-
-
 
 }
 #endif

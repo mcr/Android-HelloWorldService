@@ -42,12 +42,6 @@ HelloWorldService::~HelloWorldService()
     LOGE("HelloWorldService destroyed");
 }
 
-#define android_CHECK_INTERFACE(interface, data, reply) \
-        do { if (!data.enforceInterface(interface::getInterfaceDescriptor())) { \
-            LOGW("Call incorrectly routed to " #interface); \
-            return android::PERMISSION_DENIED;              \
-        } } while (0)
-
 android::status_t HelloWorldService::onTransact(uint32_t code,
                                                 const android::Parcel &data,
                                                 android::Parcel *reply,
@@ -57,7 +51,7 @@ android::status_t HelloWorldService::onTransact(uint32_t code,
         
         switch(code) {
         case HW_HELLOTHERE: {
-                android_CHECK_INTERFACE(IHelloWorldInterface, data, reply);
+                CHECK_INTERFACE(IHelloWorldInterface, data, reply);
                 String16 str = data.readString16();
                 hellothere(android::String8(str).string());
                 return NO_ERROR;

@@ -1,6 +1,5 @@
 package org.credil.helloworldservice;
 
-import org.credil.helloworldservice.R;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ComponentName;
@@ -17,11 +16,9 @@ import android.widget.TextView;
 public class HelloWorld extends Activity {
 
     private static final String LOG_TAG = "HelloWorld";
-
-
-
     public TextView helloBox;
 
+    /*
     public HelloWorldServiceInterface hws;
     public ServiceConnection serviceConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -45,6 +42,7 @@ public class HelloWorld extends Activity {
             hws = null;
         }
     };
+    */
 
     /**
      * Called when the activity is first created.
@@ -56,11 +54,12 @@ public class HelloWorld extends Activity {
 
         helloBox = (TextView) findViewById(R.id.HelloView01);
         helloBox.setText("start");
-        Intent test = new Intent("org.credil.helloworldservice.HelloWorldServiceInterface");
 
+        /*
+        Intent test = new Intent("org.credil.helloworldservice.HelloWorldServiceInterface");
         bindService(test,
                 serviceConnection, Context.BIND_AUTO_CREATE);
-
+        */
 
         IBinder helloworld = ServiceManager.getService("org.credil.helloworldservice.HelloWorldServiceInterface");
         if (helloworld == null) {
@@ -100,7 +99,8 @@ public class HelloWorld extends Activity {
 
     public void onDestroy(){
         super.onDestroy();
+        /*
         unbindService(serviceConnection);
+        */
     }
-
 }
