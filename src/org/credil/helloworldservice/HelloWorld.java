@@ -22,12 +22,16 @@ public class HelloWorld extends Activity {
 
     public TextView helloBox;
 
-    /*
     public HelloWorldServiceInterface hws;
     public ServiceConnection serviceConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName name, IBinder service) {
             Log.e("HelloWorld", "Service connected");
             hws = HelloWorldServiceInterface.Stub.asInterface(service);
+            try {
+                hws.hellothere("MMMMMMM");
+            } catch (RemoteException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
             if (hws != null) {
                 helloBox.setText("connected");
                 Log.e("HelloWorld", "Connected");
@@ -41,7 +45,6 @@ public class HelloWorld extends Activity {
             hws = null;
         }
     };
-    */
 
     /**
      * Called when the activity is first created.
@@ -53,10 +56,11 @@ public class HelloWorld extends Activity {
 
         helloBox = (TextView) findViewById(R.id.HelloView01);
         helloBox.setText("start");
-        /*
-        bindService(new Intent("org.credil.helloworldservice.HelloWorldServiceInterface"),
+        Intent test = new Intent("org.credil.helloworldservice.HelloWorldServiceInterface");
+
+        bindService(test,
                 serviceConnection, Context.BIND_AUTO_CREATE);
-        */
+
 
         IBinder helloworld = ServiceManager.getService("org.credil.helloworldservice.HelloWorldServiceInterface");
         if (helloworld == null) {
@@ -93,4 +97,10 @@ public class HelloWorld extends Activity {
         }
 
     }
+
+    public void onDestroy(){
+        super.onDestroy();
+        unbindService(serviceConnection);
+    }
+
 }
