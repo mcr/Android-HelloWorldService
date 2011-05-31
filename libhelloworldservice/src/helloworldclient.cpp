@@ -22,11 +22,11 @@
 
 namespace android {
 
-class BpHelloWorldClient: public android::BpInterface<IHelloWorldClient>
+class BpHelloWorldClient: public BpInterface<IHelloWorldClient>
 {
 public:
-        BpHelloWorldClient(const android::sp<android::IBinder>& impl)
-                : android::BpInterface<IHelloWorldClient>(impl)
+        BpHelloWorldClient(const sp<IBinder>& impl)
+                : BpInterface<IHelloWorldClient>(impl)
         {
         }
 
@@ -35,12 +35,13 @@ public:
         {
                 android::Parcel data, reply;
                 data.writeInterfaceToken(getInterfaceDescriptor());
-                data.writeString16(android::String16(str));
+                data.writeString16(String16(str));
                 remote()->transact(HW_HELLOTHERE, data, &reply, android::IBinder::FLAG_ONEWAY);
         }
 
 };
 
-android_IMPLEMENT_META_INTERFACE(HelloWorldClient, HELLOWORLD_NAME)
+IMPLEMENT_META_INTERFACE(HelloWorldClient, HELLOWORLD_NAME);
+
 
 };
