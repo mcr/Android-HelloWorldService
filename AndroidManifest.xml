@@ -4,11 +4,14 @@
       android:versionCode="1"
       android:versionName="1.0">
     <application android:icon="@drawable/icon" android:label="@string/app_name">
-        <service android:name="HelloWorldService" android:process="org.credil.helloworldservice">
+
+        <service android:name=".HelloWorldService" >
             <intent-filter>
-                 <action android:name="org.credil.helloworldservice.START_SERVICE"></action>
+                 <action android:name="org.credil.helloworldservice.HelloWorldServiceInterface"/>
              </intent-filter>
         </service>
+        <service android:name=".HelloWorldService"/>
+
         <activity android:name=".HelloWorld"
                   android:label="@string/app_name">
             <intent-filter>
@@ -17,9 +20,4 @@
             </intent-filter>
         </activity>
     </application>
-
-        <uses-sdk android:minSdkVersion="3" />
-<uses-permission android:name="android.permission.CAMERA"></uses-permission>
-
-<uses-permission android:name="android.permission.INTERNET"></uses-permission>
-</manifest> 
+</manifest>

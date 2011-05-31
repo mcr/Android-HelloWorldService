@@ -15,7 +15,7 @@
 #include <binder/Parcel.h>
 
 #include "helloworld.h"
-#include "helloworldservice.h"
+//#include "helloworldservice.h"
 #include "utils/Log.h"
 
 #include <unistd.h>
@@ -34,7 +34,7 @@ public:
         void hellothere(const char *str)
         {
                 android::Parcel data, reply;
-                data.writeInterfaceToken(IHelloWorldService::getInterfaceDescriptor());
+                data.writeInterfaceToken(getInterfaceDescriptor());
                 data.writeString16(android::String16(str));
                 remote()->transact(HW_HELLOTHERE, data, &reply, android::IBinder::FLAG_ONEWAY);
         }

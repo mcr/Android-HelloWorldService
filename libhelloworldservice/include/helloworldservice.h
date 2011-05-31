@@ -13,15 +13,7 @@
 
 #include "helloworld.h"
 
-class IHelloWorldService: public android::IInterface {
-public:
-
-        android_DECLARE_META_INTERFACE(HelloWorldService)
-
-        void hellothere(const char *str);
-};
-
-class BnHelloWorldService : public android::BnInterface<IHelloWorldService>
+class BnHelloWorldService : public android::BnInterface<IHelloWorldClient>
 {
 	// not sure.
         // actual dispatch.
@@ -33,6 +25,7 @@ class HelloWorldService : public BnHelloWorldService
 
 public:
     static  void                instantiate();
+    void hellothere(const char *str);
 
 //    class Client : public BnMediaPlayer {
 //

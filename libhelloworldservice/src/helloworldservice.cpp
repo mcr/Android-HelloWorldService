@@ -18,18 +18,13 @@
 
 #include <unistd.h>
 
-const android::String16 IHelloWorldService::descriptor(HELLOWORLD_NAME);
-
-android::String16 IHelloWorldService::getInterfaceDescriptor() {
-        return IHelloWorldService::descriptor;
-}
-
-
 void HelloWorldService::instantiate() {
 	android::defaultServiceManager()->addService(
-                IHelloWorldService::descriptor, new HelloWorldService());
+                IHelloWorldClient::descriptor, new HelloWorldService());
 }
+void HelloWorldService::hellothere(const char *str){
 
+}
 HelloWorldService::HelloWorldService()
 {
     LOGE("HelloWorldService created");
@@ -56,7 +51,7 @@ android::status_t HelloWorldService::onTransact(uint32_t code,
         
         switch(code) {
         case HW_HELLOTHERE: {
-                android_CHECK_INTERFACE(IHelloWorldService, data, reply);
+                android_CHECK_INTERFACE(IHelloWorldClient, data, reply);
                 android::String16 str = data.readString16();
                 /* hellothere(str); */
                 LOGE("hello: %s\n", android::String8(str).string());
