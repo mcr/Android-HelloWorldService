@@ -10,7 +10,7 @@
 #include <string.h>
 #include <cutils/atomic.h>
 #include <utils/Errors.h>
-#include <utils/IServiceManager.h>
+#include <binder/IServiceManager.h>
 #include <utils/String16.h>
 
 #include "helloworldservice.h"
@@ -41,7 +41,7 @@ HelloWorldService::~HelloWorldService()
     LOGE("HelloWorldService destroyed");
 }
 
-#define CHECK_INTERFACE(interface, data, reply) \
+#define android_CHECK_INTERFACE(interface, data, reply) \
         do { if (!data.enforceInterface(interface::getInterfaceDescriptor())) { \
             LOGW("Call incorrectly routed to " #interface); \
             return android::PERMISSION_DENIED;              \
@@ -56,7 +56,7 @@ android::status_t HelloWorldService::onTransact(uint32_t code,
         
         switch(code) {
         case HW_HELLOTHERE: {
-                CHECK_INTERFACE(IHelloWorldService, data, reply);
+                android_CHECK_INTERFACE(IHelloWorldService, data, reply);
                 const char *str;
                 str = data.readCString();
                 /* hellothere(str); */

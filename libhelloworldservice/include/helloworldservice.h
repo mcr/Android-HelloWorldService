@@ -3,8 +3,8 @@
 
 #include <utils/KeyedVector.h>
 #include <utils/RefBase.h>
-#include <utils/IInterface.h>
-#include <utils/Parcel.h>
+#include <binder/IInterface.h>
+#include <binder/Parcel.h>
 #include <utils/String16.h>
 #include <utils/threads.h>
 #include <string.h>

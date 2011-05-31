@@ -10,9 +10,9 @@
 #include <string.h>
 #include <cutils/atomic.h>
 #include <utils/Errors.h>
-#include <utils/IServiceManager.h>
+#include <binder/IServiceManager.h>
 #include <utils/String16.h>
-#include <utils/Parcel.h>
+#include <binder/Parcel.h>
 
 #include "helloworld.h"
 #include "helloworldservice.h"
