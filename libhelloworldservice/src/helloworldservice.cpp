@@ -21,7 +21,7 @@
 namespace android {
 
 void HelloWorldService::instantiate() {
-	android::defaultServiceManager()->addService(
+	defaultServiceManager()->addService(
                 IHelloWorldClient::descriptor, new HelloWorldService());
 }
 
@@ -58,15 +58,15 @@ android::status_t HelloWorldService::onTransact(uint32_t code,
         switch(code) {
         case HW_HELLOTHERE: {
                 android_CHECK_INTERFACE(IHelloWorldClient, data, reply);
-                android::String16 str = data.readString16();
+                String16 str = data.readString16();
                 hellothere(android::String8(str).string());
-                return android::NO_ERROR;
+                return NO_ERROR;
         } break;
         default:
                 return BBinder::onTransact(code, data, reply, flags);
         }
 
-        return android::NO_ERROR;
+        return NO_ERROR;
 }
 
 }
