@@ -13,71 +13,84 @@ import android.os.ServiceManager;
 import android.util.Log;
 import android.widget.TextView;
 
+
 public class HelloWorld extends Activity {
 
     private static final String LOG_TAG = "HelloWorld";
 
-    /* public HelloWorldServiceInterface hws; */
-    public TextView helloBox;
-    public ServiceConnection serviceConnection;
 
-    /** Called when the activity is first created. */
+
+    public TextView helloBox;
+
+    /*
+    public HelloWorldServiceInterface hws;
+    public ServiceConnection serviceConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.e("HelloWorld", "Service connected");
+            hws = HelloWorldServiceInterface.Stub.asInterface(service);
+            if (hws != null) {
+                helloBox.setText("connected");
+                Log.e("HelloWorld", "Connected");
+            } else {
+                Log.e("HelloWorld", "Failed to connect");
+            }
+        }
+
+        public void onServiceDisconnected(ComponentName name) {
+            Log.e("HelloWorld", "disconnected");
+            hws = null;
+        }
+    };
+    */
+
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hello);
 
-        helloBox = (TextView)findViewById(R.id.HelloView01);
+        helloBox = (TextView) findViewById(R.id.HelloView01);
         helloBox.setText("start");
-
         /*
-        serviceConnection = new ServiceConnection() {
-            public void onServiceConnected(ComponentName name, IBinder service) {
-                Log.e("HelloWorld", "Service connected");
-                hws = HelloWorldServiceInterface.Stub.asInterface(service);
-                if(hws != null) {
-                    helloBox.setText("connected");
-                    Log.e("HelloWorld", "Connected");
-                } else {
-                    Log.e("HelloWorld", "Failed to connect");
-                }
-            }  
-
-            public void onServiceDisconnected(ComponentName name) {
-                Log.e("HelloWorld","disconnected");
-                hws = null;
-            }
-        };
-
-        // I think it should really be:
-        //bindService(ServiceManager.getService("org.credilk..."),
-        //            serviceConnection, ???):
-
-        bindService(new Intent("org.credil.helloworldservice.HelloWorldServiceInterface.START_SERVICE"),
-                    serviceConnection, Context.BIND_AUTO_CREATE);
+        bindService(new Intent("org.credil.helloworldservice.HelloWorldServiceInterface"),
+                serviceConnection, Context.BIND_AUTO_CREATE);
         */
-        
-        // BnServiceManager.getDefault();
-        String[] services;
-        
-        try {
-            services = ServiceManager.listServices();
-        } catch (RemoteException e) {
-            Log.e("HelloWorld", "No list of services.");
+
+        IBinder helloworld = ServiceManager.getService("org.credil.helloworldservice.HelloWorldServiceInterface");
+        if (helloworld == null) {
+            Log.e(LOG_TAG, "hello service not found ");
             return;
         }
 
-        Log.e("HelloWorld", "services is "+(services.length));
-        int i;
-        for(i=0; i<services.length; i++) {
-            Log.e("HelloWorld", "services["+i+"]="+ services[i]);
+
+        /** if you already have a stub e.g. AIDL that works **/
+        HelloWorldServiceInterface interf = HelloWorldServiceInterface.Stub.asInterface(helloworld);
+        try {
+            interf.hellothere("Using interfaces");
+        } catch (RemoteException re) {
+            Log.w(LOG_TAG, "Error calling the interface:" + re.getMessage(), re);
         }
 
-        IBinder helloworld = ServiceManager.getService("org.credil.helloworldservice.HelloWorldServiceInterface");
-        if(helloworld != null) {
-            Log.e(LOG_TAG, "hello "+helloworld.toString());
-        } else {
-            Log.e(LOG_TAG, "hello service not found ");
+        /** If you want to "hack around"                                 **/
+        Log.e(LOG_TAG, "hello " + helloworld.toString());
+        android.os.Parcel _data = android.os.Parcel.obtain();
+        android.os.Parcel _reply = android.os.Parcel.obtain();
+        int _result;
+        try {
+            _data.writeInterfaceToken("org.credil.helloworldservice.HelloWorldServiceInterface");
+            _data.writeString("Calling from Java now");
+            Log.d(LOG_TAG, "Data:" + _data.toString());
+            helloworld.transact((android.os.IBinder.FIRST_CALL_TRANSACTION + 0), _data, _reply, 0);
+            _reply.readException();
+            _result = _reply.readInt();
+        } catch (RemoteException re) {
+            Log.w(LOG_TAG, "Remote exception");
+        } finally {
+            _reply.recycle();
+            _data.recycle();
         }
+
     }
 }
