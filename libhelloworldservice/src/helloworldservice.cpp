@@ -12,7 +12,7 @@
 #include <utils/Errors.h>
 #include <binder/IServiceManager.h>
 #include <utils/String16.h>
-
+#include <utils/String8.h>
 #include "helloworldservice.h"
 #include "utils/Log.h"
 
@@ -57,11 +57,10 @@ android::status_t HelloWorldService::onTransact(uint32_t code,
         switch(code) {
         case HW_HELLOTHERE: {
                 android_CHECK_INTERFACE(IHelloWorldService, data, reply);
-                const char *str;
-                str = data.readCString();
+                android::String16 str = data.readString16();
                 /* hellothere(str); */
-                LOGE("hello: %s\n", str);
-                printf("hello: %s\n", str);
+                LOGE("hello: %s\n", android::String8(str).string());
+                printf("hello: %s\n", android::String8(str).string());
                 return android::NO_ERROR;
         } break;
         default:

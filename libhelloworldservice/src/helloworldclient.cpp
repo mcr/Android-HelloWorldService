@@ -35,7 +35,7 @@ public:
         {
                 android::Parcel data, reply;
                 data.writeInterfaceToken(IHelloWorldService::getInterfaceDescriptor());
-                data.writeCString(str);
+                data.writeString16(android::String16(str));
                 remote()->transact(HW_HELLOTHERE, data, &reply, android::IBinder::FLAG_ONEWAY);
         }
 
