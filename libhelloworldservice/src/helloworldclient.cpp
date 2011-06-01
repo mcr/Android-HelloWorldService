@@ -15,7 +15,6 @@
 #include <binder/Parcel.h>
 
 #include "helloworld.h"
-//#include "helloworldservice.h"
 #include "utils/Log.h"
 
 #include <unistd.h>
@@ -26,23 +25,20 @@ class BpHelloWorldInterface: public BpInterface<IHelloWorldInterface>
 {
 public:
         BpHelloWorldInterface(const sp<IBinder>& impl)
-                : BpInterface<IHelloWorldInterface>(impl)
-        {
-        }
+                : BpInterface<IHelloWorldInterface>(impl) {}
 
                 
-        void hellothere(const char *str)
-        {
-                android::Parcel data, reply;
+        virtual void hellothere(const char *str) {
+                Parcel data, reply;
                 data.writeInterfaceToken(getInterfaceDescriptor());
                 data.writeString16(String16(str));
-                remote()->transact(HW_HELLOTHERE, data, &reply, android::IBinder::FLAG_ONEWAY);
+                remote()->transact(HW_HELLOTHERE, data, &reply, IBinder::FLAG_ONEWAY);
         }
 
 };
 
-/* TODO move this code to the generifc header */
 IMPLEMENT_META_INTERFACE(HelloWorldInterface, HELLOWORLD_NAME);
+
 
 
 };

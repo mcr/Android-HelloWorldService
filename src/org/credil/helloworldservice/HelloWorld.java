@@ -69,32 +69,12 @@ public class HelloWorld extends Activity {
 
 
         /** if you already have a stub e.g. AIDL that works **/
-        HelloWorldServiceInterface interf = HelloWorldServiceInterface.Stub.asInterface(helloworld);
+        HelloWorldServiceInterface helloWorldInterface = HelloWorldServiceInterface.Stub.asInterface(helloworld);
         try {
-            interf.hellothere("Using interfaces");
+            helloWorldInterface.hellothere("Using interfaces");
         } catch (RemoteException re) {
             Log.w(LOG_TAG, "Error calling the interface:" + re.getMessage(), re);
         }
-
-        /** If you want to "hack around"                                 **/
-        Log.e(LOG_TAG, "hello " + helloworld.toString());
-        android.os.Parcel _data = android.os.Parcel.obtain();
-        android.os.Parcel _reply = android.os.Parcel.obtain();
-        int _result;
-        try {
-            _data.writeInterfaceToken("org.credil.helloworldservice.HelloWorldServiceInterface");
-            _data.writeString("Calling from Java now");
-            Log.d(LOG_TAG, "Data:" + _data.toString());
-            helloworld.transact((android.os.IBinder.FIRST_CALL_TRANSACTION + 0), _data, _reply, 0);
-            _reply.readException();
-            _result = _reply.readInt();
-        } catch (RemoteException re) {
-            Log.w(LOG_TAG, "Remote exception");
-        } finally {
-            _reply.recycle();
-            _data.recycle();
-        }
-
     }
 
     public void onDestroy(){

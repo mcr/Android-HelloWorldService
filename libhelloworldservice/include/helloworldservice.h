@@ -15,24 +15,14 @@
 
 namespace android {
 
-class BnHelloWorldService : public android::BnInterface<IHelloWorldInterface>
-{
-	// not sure.
-        // actual dispatch.
-};
 
-class HelloWorldService : public BnHelloWorldService
+class HelloWorldService : public BnInterface<IHelloWorldInterface>
 {
 	class Client;
 
 public:
     static  void                instantiate();
     void hellothere(const char *str);
-
-//    class Client : public BnMediaPlayer {
-//
-//        // IHelloWorld interface
-//    }
 
                             HelloWorldService();
     virtual                 ~HelloWorldService();
@@ -43,7 +33,7 @@ public:
                                  uint32_t flags);
 
     mutable     android::Mutex                       mLock;
-    android::SortedVector< android::wp<Client> >     mClients;
+    android::SortedVector<wp<Client> >     mClients;
     int32_t                     mNextConnId;
 };
 
