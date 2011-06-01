@@ -61,7 +61,7 @@ public class HelloWorld extends Activity {
                 serviceConnection, Context.BIND_AUTO_CREATE);
         */
 
-        IBinder helloworld = ServiceManager.getService("org.credil.helloworldservice.HelloWorldServiceInterface");
+        IBinder helloworld = ServiceManager.getService("org.credil.helloworldservice.IHelloWorld");
         if (helloworld == null) {
             Log.e(LOG_TAG, "hello service not found ");
             return;
@@ -69,9 +69,9 @@ public class HelloWorld extends Activity {
 
 
         /** if you already have a stub e.g. AIDL that works **/
-        HelloWorldServiceInterface helloWorldInterface = HelloWorldServiceInterface.Stub.asInterface(helloworld);
+        IHelloWorld helloWorld = IHelloWorld.Stub.asInterface(helloworld);
         try {
-            helloWorldInterface.hellothere("Using interfaces");
+            helloWorld.hellothere("Using interfaces");
         } catch (RemoteException re) {
             Log.w(LOG_TAG, "Error calling the interface:" + re.getMessage(), re);
         }

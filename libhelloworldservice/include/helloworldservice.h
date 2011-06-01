@@ -11,12 +11,12 @@
 
 #include <utils/Log.h>
 
-#include "helloworld.h"
+#include "IHelloWorld.h"
 
 namespace android {
 
 
-class HelloWorldService : public BnInterface<IHelloWorldInterface>
+class HelloWorldService : public BnInterface<IHelloWorld>
 {
 	class Client;
 

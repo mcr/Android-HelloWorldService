@@ -14,20 +14,19 @@
 #include <utils/String16.h>
 #include <binder/Parcel.h>
 
-#include "helloworld.h"
+#include "IHelloWorld.h"
 #include "utils/Log.h"
 
 #include <unistd.h>
 
 namespace android {
 
-class BpHelloWorldInterface: public BpInterface<IHelloWorldInterface>
+class BpHelloWorld: public BpInterface<IHelloWorld>
 {
 public:
-        BpHelloWorldInterface(const sp<IBinder>& impl)
-                : BpInterface<IHelloWorldInterface>(impl) {}
+        BpHelloWorld(const sp<IBinder>& impl)
+                : BpInterface<IHelloWorld>(impl) {}
 
-                
         virtual void hellothere(const char *str) {
                 Parcel data, reply;
                 data.writeInterfaceToken(getInterfaceDescriptor());
@@ -37,7 +36,7 @@ public:
 
 };
 
-IMPLEMENT_META_INTERFACE(HelloWorldInterface, HELLOWORLD_NAME);
+IMPLEMENT_META_INTERFACE(HelloWorld, HELLOWORLD_NAME);
 
 
 

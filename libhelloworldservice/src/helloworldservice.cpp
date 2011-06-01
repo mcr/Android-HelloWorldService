@@ -23,7 +23,7 @@ namespace android {
 
 void HelloWorldService::instantiate() {
 	defaultServiceManager()->addService(
-                IHelloWorldInterface::descriptor, new HelloWorldService());
+                IHelloWorld::descriptor, new HelloWorldService());
 }
 
 void HelloWorldService::hellothere(const char *str){
@@ -52,7 +52,7 @@ android::status_t HelloWorldService::onTransact(uint32_t code,
         
         switch(code) {
         case HW_HELLOTHERE: {
-                CHECK_INTERFACE(IHelloWorldInterface, data, reply);
+                CHECK_INTERFACE(IHelloWorld, data, reply);
                 String16 str = data.readString16();
                 hellothere(String8(str).string());
                 return NO_ERROR;

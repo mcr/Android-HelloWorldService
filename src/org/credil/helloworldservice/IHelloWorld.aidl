@@ -1,5 +1,5 @@
 package org.credil.helloworldservice;
 
-interface HelloWorldServiceInterface {
+interface IHelloWorld {
         int hellothere(String msg);
 }

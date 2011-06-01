@@ -15,7 +15,7 @@
 #include <binder/IServiceManager.h>
 #include <utils/Log.h>
 
-#include "helloworld.h"
+#include "IHelloWorld.h"
 
 int main(int argc, char *argv[])
 {
@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 
         android::sp<android::IServiceManager> sm = android::defaultServiceManager();
         android::sp<android::IBinder> binder;
-        android::sp<android::IHelloWorldInterface> shw;
+        android::sp<android::IHelloWorld> shw;
 
         do {
                 binder = sm->getService(android::String16(HELLOWORLD_NAME));
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 
 	LOGI("Hello client is now trying");
 
-        shw = android::interface_cast<android::IHelloWorldInterface>(binder);
+        shw = android::interface_cast<android::IHelloWorld>(binder);
         shw->hellothere("fun");
 	
 	LOGI("Hello client is now exiting");

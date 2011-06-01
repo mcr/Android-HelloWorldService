@@ -7,8 +7,11 @@
  * The name also called descriptor of the binder interface. This is the
  * unique name that will be used to register the service and that can be
  * used to get the services.
+ *
+ * The aidl tool used by android by default uses the interface name as descriptor
+ * if you use an aidl this must match the aidl package and name
  **/
-#define HELLOWORLD_NAME "org.credil.helloworldservice.HelloWorldServiceInterface"
+#define HELLOWORLD_NAME "org.credil.helloworldservice.IHelloWorld"
 
 namespace android {
 
@@ -16,18 +19,22 @@ namespace android {
  *  Define the interface we want to be remotable. This interface
  *  can be used to create booth local and remote implementations.
  *
- * The convention is to start such interface with I
+ * The convention is to start such interface with I. In this case we simply call
+ * the interface IHelloWorld as the interface does not offer real functionality.
+ * In Android code you will find that many interfaces name contain information about
+ * what they do:Manager,Service, Callback,Session, Listner etc.
  *
  *  Extending from IInterface means we will have an asBinder method
  *  That can be used to perform remote calls
  **/
-class IHelloWorldInterface: public IInterface {
+class IHelloWorld: public IInterface {
 protected:
     /**
      * Interface are regsitered using a name see "HELLOWORLD_NAME"
      * this is how binders find eachoter. Once this connection is setup dispatching
      * is done using the enum bellow. to booth parties (client/server) will use
-     * HW_HELLOTHERE (1) as intentifier for the hellothere call.
+     * HW_HELLOTHERE (1) as intentifier for the hellothere call and addutional payloads
+     * are delivered using parcels.
      **/
     enum {
             HW_HELLOTHERE =  IBinder::FIRST_CALL_TRANSACTION
@@ -35,7 +42,7 @@ protected:
 
 public:
         /**
-         * macro Defined in binder/IInterface.h
+         * DECLARE_META_INTERFACE is a macro Defined in binder/IInterface.h
          *
          * It defines two methods
          * getInterfaceDescriptor (this is meta data)
@@ -51,7 +58,7 @@ public:
          * If you are only implementing the native side of things this macro might be overhead because
          * it requires you to have a Bp (remote) implementation
          **/
-        DECLARE_META_INTERFACE(HelloWorldInterface)
+        DECLARE_META_INTERFACE(HelloWorld)
 
         /**
          * The methods we want to expose using the interface.
