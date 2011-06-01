@@ -34,3 +34,22 @@ hello: Calling from Java now
 # /system/bin/helloworldclient
 
 To launch the Activity use the activity launcher.
+
+
+Native binder:
+/* Interfaces extend */
+class IInterface extends RefBase
+    + asBinder()
+    + onAsBinder();
+
+/* local class implementation extends */
+class BnInterface<INTERFACE> extends BBinder
+    + queryLocalInterface(descriptor)
+    + getInterfaceDescriptor()
+
+/* remote stub implemntation extends */
+class BpInterface<INTERFACE> extends BpRefBase
+    + onAsBinder();
+
+
+On

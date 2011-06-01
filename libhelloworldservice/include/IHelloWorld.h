@@ -42,7 +42,8 @@ protected:
 
 public:
         /**
-         * DECLARE_META_INTERFACE is a macro Defined in binder/IInterface.h
+         * DECLARE_META_INTERFACE is a macro Defined in binder/IInterface.h that
+         * implements the BnInterface (native interface)
          *
          * It defines two methods
          * getInterfaceDescriptor (this is meta data)

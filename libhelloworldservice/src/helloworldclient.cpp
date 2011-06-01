@@ -21,6 +21,10 @@
 
 namespace android {
 
+/**
+ *  This is the implementation of the client side of the IHelloWorld interface
+ *
+ **/
 class BpHelloWorld: public BpInterface<IHelloWorld>
 {
 public:

@@ -18,12 +18,13 @@ public class HelloWorld extends Activity {
     private static final String LOG_TAG = "HelloWorld";
     public TextView helloBox;
 
+
     /*
-    public HelloWorldServiceInterface hws;
+    public IHelloWorld hws;
     public ServiceConnection serviceConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName name, IBinder service) {
             Log.e("HelloWorld", "Service connected");
-            hws = HelloWorldServiceInterface.Stub.asInterface(service);
+            hws = IHelloWorld.Stub.asInterface(service);
             try {
                 hws.hellothere("MMMMMMM");
             } catch (RemoteException e) {
@@ -55,12 +56,14 @@ public class HelloWorld extends Activity {
         helloBox = (TextView) findViewById(R.id.HelloView01);
         helloBox.setText("start");
 
-        /*
-        Intent test = new Intent("org.credil.helloworldservice.HelloWorldServiceInterface");
-        bindService(test,
-                serviceConnection, Context.BIND_AUTO_CREATE);
-        */
 
+        /*
+        //We can currently not perform a bindService because the native code
+        //did not register to the activity manager
+        Intent test = new Intent("org.credil.helloworldservice.IHelloWorld");
+        bindService(test,
+                serviceConnection, 0);
+        */
         IBinder helloworld = ServiceManager.getService("org.credil.helloworldservice.IHelloWorld");
         if (helloworld == null) {
             Log.e(LOG_TAG, "hello service not found ");
@@ -68,7 +71,10 @@ public class HelloWorld extends Activity {
         }
 
 
-        /** if you already have a stub e.g. AIDL that works **/
+        /**
+         * The above method returns a generic binder object and we can use the generated code
+         * from the AIDL to cast it to a java interface
+         */
         IHelloWorld helloWorld = IHelloWorld.Stub.asInterface(helloworld);
         try {
             helloWorld.hellothere("Using interfaces");

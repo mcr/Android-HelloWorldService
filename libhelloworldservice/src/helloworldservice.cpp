@@ -27,7 +27,6 @@ void HelloWorldService::instantiate() {
 }
 
 void HelloWorldService::hellothere(const char *str){
-                /* hellothere(str); */
                 LOGE("hello: %s\n", str);
                 printf("hello: %s\n", str);
 }
@@ -43,7 +42,7 @@ HelloWorldService::~HelloWorldService()
     LOGE("HelloWorldService destroyed");
 }
 
-android::status_t HelloWorldService::onTransact(uint32_t code,
+status_t HelloWorldService::onTransact(uint32_t code,
                                                 const android::Parcel &data,
                                                 android::Parcel *reply,
                                                 uint32_t flags)
