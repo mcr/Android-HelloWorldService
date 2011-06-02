@@ -42,14 +42,27 @@ class IInterface extends RefBase
     + asBinder()
     + onAsBinder();
 
-/* local class implementation extends */
+/* The native class implementation extends BnInterface
+ * this is the instance that will be given to the service
+ * manager
+ **/
 class BnInterface<INTERFACE> extends BBinder
     + queryLocalInterface(descriptor)
+
+class BBinder extends IBinder
     + getInterfaceDescriptor()
+    + attachObject(id ...) /* housekeeping of clients? */
+    + findObject(id ...)
+    + detachObject(id ...);
 
 /* remote stub implemntation extends */
 class BpInterface<INTERFACE> extends BpRefBase
     + onAsBinder();
 
 
-On
+
+/* BpRefBase defines a ref counted class having a method to get
+ * a binder object
+ */
+class BpRefBase extends RefBase
+    + remote() IBinder*

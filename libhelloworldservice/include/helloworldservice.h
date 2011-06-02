@@ -21,11 +21,13 @@ class HelloWorldService : public BnInterface<IHelloWorld>
 	class Client;
 
 public:
+
+    virtual                 ~HelloWorldService();
+
     static  void                instantiate();
+
     void hellothere(const char *str);
 
-                            HelloWorldService();
-    virtual                 ~HelloWorldService();
 
     android::status_t onTransact(uint32_t code,
                                  const android::Parcel &data,
@@ -35,6 +37,9 @@ public:
     mutable     android::Mutex                       mLock;
     android::SortedVector<wp<Client> >     mClients;
     int32_t                     mNextConnId;
+private:
+    /* Private construtor use the  instantiate method */
+    HelloWorldService();
 };
 
 }

@@ -20,8 +20,14 @@
 
 namespace android {
 
-
+/**
+ *  This static methods initializes a new HelloWorldService
+ *  and "registers" it to the default service manager.
+ **/
 void HelloWorldService::instantiate() {
+    /**
+     * The addService method takes a service name and a IBinder object
+     **/
 	defaultServiceManager()->addService(
                 IHelloWorld::descriptor, new HelloWorldService());
 }
