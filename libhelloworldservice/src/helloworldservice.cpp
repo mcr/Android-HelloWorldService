@@ -33,24 +33,17 @@ void HelloWorldService::instantiate() {
 }
 
 void HelloWorldService::hellothere(const char *str){
-                LOGE("hello: %s\n", str);
-                printf("hello: %s\n", str);
+    LOGE("hello: %s\n", str);
+    printf("hello: %s\n", str);
 }
 
-HelloWorldService::HelloWorldService()
-{
-    LOGE("HelloWorldService created");
-    mNextConnId = 1;
-}
-
-HelloWorldService::~HelloWorldService()
-{
-    LOGE("HelloWorldService destroyed");
-}
-
+/**
+ * Actual implementation of the native side of things. This method gets called with a certain code
+ * that was (hopefully) defined in the interface.
+ **/
 status_t HelloWorldService::onTransact(uint32_t code,
-                                                const android::Parcel &data,
-                                                android::Parcel *reply,
+                                                const Parcel &data,
+                                                Parcel *reply,
                                                 uint32_t flags)
 {
         LOGE("OnTransact(%u,%u)", code, flags);
@@ -58,6 +51,17 @@ status_t HelloWorldService::onTransact(uint32_t code,
         switch(code) {
         case HW_HELLOTHERE: {
                 CHECK_INTERFACE(IHelloWorld, data, reply);
+                /**
+                 * Checking permissions is always a good idea.
+                 *
+                 * Note that the native client will also be granted these permissions in two cases
+                 * 1) you run the client code as root or system user.
+                 * 2) you run the client code as user who was granted this permission.
+                 * @see http://github.com/keesj/gomo/wiki/AndroidSecurity for more information
+                 **/
+                if (checkCallingPermission(String16("org.credil.helloworldservice.permissions.CALL_HELLOTHERE")) == false){
+                    return   PERMISSION_DENIED;
+                }
                 String16 str = data.readString16();
                 hellothere(String8(str).string());
                 return NO_ERROR;
@@ -65,7 +69,6 @@ status_t HelloWorldService::onTransact(uint32_t code,
         default:
                 return BBinder::onTransact(code, data, reply, flags);
         }
-
         return NO_ERROR;
 }
 

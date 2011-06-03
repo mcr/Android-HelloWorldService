@@ -22,10 +22,14 @@ namespace android {
  * The convention is to start such interface with I. In this case we simply call
  * the interface IHelloWorld as the interface does not offer real functionality.
  * In Android code you will find that many interfaces name contain information about
- * what they do:Manager,Service, Callback,Session, Listner etc.
+ * what they do:Manager,Service, Callback,Session, Listener etc.
  *
  *  Extending from IInterface means we will have an asBinder method
  *  That can be used to perform remote calls
+ *
+ * class IInterface extends RefBase
+ *   + asBinder()
+ *   + onAsBinder();
  **/
 class IHelloWorld: public IInterface {
 protected:

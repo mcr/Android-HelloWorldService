@@ -45,10 +45,15 @@ class IInterface extends RefBase
 /* The native class implementation extends BnInterface
  * this is the instance that will be given to the service
  * manager
+ *
+ * BnInterface is the base implementation for a native (local) IInterface
  **/
 class BnInterface<INTERFACE> extends BBinder
     + queryLocalInterface(descriptor)
 
+/**
+ * The BBinder class is the standard implementation of IBinder for a IInterface object
+ **/
 class BBinder extends IBinder
     + getInterfaceDescriptor()
     + attachObject(id ...) /* housekeeping of clients? */

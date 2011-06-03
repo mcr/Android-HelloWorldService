@@ -3,6 +3,17 @@
       package="org.credil.helloworldservice"
       android:versionCode="1"
       android:versionName="1.0">
+
+    <!-- Define a permission for people to access the native service this should normally
+    happen in a different place. all Binder interface are to be considered public so you always
+    need to take security into account -->
+    <permission android:name="org.credil.helloworldservice.permissions.CALL_HELLOTHERE"
+        android:permissionGroup="android.permission-group.HARDWARE_CONTROLS"
+        android:protectionLevel="dangerous"
+        android:label="@string/permlab_callHelloTherePermission"
+        android:description="@string/permdesc_callHelloTherePermission" />
+
+    <uses-permission android:name="org.credil.helloworldservice.permissions.CALL_HELLOTHERE" />
     <application android:icon="@drawable/icon" android:label="@string/app_name">
         <activity android:name=".HelloWorld"
                   android:label="@string/app_name">

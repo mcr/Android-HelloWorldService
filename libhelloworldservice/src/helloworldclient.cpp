@@ -17,21 +17,28 @@
 #include "IHelloWorld.h"
 #include "utils/Log.h"
 
-#include <unistd.h>
-
 namespace android {
 
 /**
- *  This is the implementation of the client side of the IHelloWorld interface
+ * This is the implementation of the client side of the IHelloWorld interface
  * Typical usage of this class is to first get a binder object from the service manager
  * then use the interface_cast<IHelloWorld>(binder) method to convert the binder into
  * a IHelloWorld smart pointer and invoke methods on this
  *
  * This code is not needed if your interface is only exposed to the Java world.
- * but simlar code can be created to access "Java only" AIDL interface.
+ * but similar code can be created to access "Java only" AIDL interface.
  *
  * Because we extend from BpInterface we have the remote() method
- * to get access backto the binder when needed
+ * to get access back to the binder when needed
+ *
+ *  class BpInterface<INTERFACE> extends BpRefBase
+ *   + onAsBinder();
+ *
+ * BpRefBase defines a ref counted class having a method to get
+ * a binder object
+ *
+ * class BpRefBase extends RefBase
+ *   + remote() IBinder
  *
  **/
 class BpHelloWorld: public BpInterface<IHelloWorld>
@@ -58,7 +65,5 @@ public:
  * Implementation of the cast from a IBinder back to an interface.
  */
 IMPLEMENT_META_INTERFACE(HelloWorld, HELLOWORLD_NAME);
-
-
 
 };

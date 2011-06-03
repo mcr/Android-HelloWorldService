@@ -70,7 +70,6 @@ public class HelloWorld extends Activity {
             return;
         }
 
-
         /**
          * The above method returns a generic binder object and we can use the generated code
          * from the AIDL to cast it to a java interface
