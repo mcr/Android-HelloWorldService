@@ -47,10 +47,9 @@ status_t HelloWorldService::onTransact(uint32_t code,
                                                 uint32_t flags)
 {
         LOGE("OnTransact(%u,%u)", code, flags);
-        
+        CHECK_INTERFACE(IHelloWorld, data, reply);
         switch(code) {
         case HW_HELLOTHERE: {
-                CHECK_INTERFACE(IHelloWorld, data, reply);
                 /**
                  * Checking permissions is always a good idea.
                  *
