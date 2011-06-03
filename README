@@ -3,11 +3,11 @@ possibilities of creating pure native android services. The current status
 is that it certainly is possible to create native binder services under android and We wonder why not all communication inside android is implemented this way.
 
 Problems:
--It works but only for platform code. 
+-It works but only for platform code e.g. it is "hard" to get access to your native service using the android SDK
 --It is not possible/easy to access the service using the standard Context.bindService method probably because starting the native code is not started or managed by the ActivityManager(We are lacking proper life cycle management)
 
 This code was taken from http://github.com/mcr/Android-HelloWorldService and
-modified to work on ginderbread. 
+modified to work on gingerbread.
 
 Building/playing around:
 
