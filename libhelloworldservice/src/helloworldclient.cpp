@@ -26,7 +26,7 @@ namespace android {
  * a IHelloWorld smart pointer and invoke methods on this
  *
  * This code is not needed if your interface is only exposed to the Java world.
- * but similar code can be created to access "Java only" AIDL interface.
+ * but similar code can be created to access "Java only" AIDL interfaces.
  *
  * Because we extend from BpInterface we have the remote() method
  * to get access back to the binder when needed

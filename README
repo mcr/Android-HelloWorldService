@@ -1,17 +1,44 @@
-Dummy native binder android HelloWorld sample created to better understand the
-possibilities of creating pure native android services. The current status
-is that it certainly is possible to create native binder services under android and We wonder why not all communication inside android is implemented this way.
+Dummy native binder android HelloWorld sample created to better understand
+the possibilities of creating pure native android services. The current
+status is that it certainly is possible to create native binder services
+under Android
 
-Problems:
--It works but only for platform code e.g. it is "hard" to get access to your native service using the android SDK
---It is not possible/easy to access the service using the standard Context.bindService method probably because starting the native code is not started or managed by the ActivityManager(We are lacking proper life cycle management)
+Scope:
+We are currently mostly interested in creating a native service started from
+init.rc and we would like this service to be pure native (no JVM). We want
+this service to act as much as possible like any other android service. We
+would also like it to be possible for the client of the service to not depend
+on Android internal API's.
+
+Limitations:
+The native service currently runs as system user and uses the
+ServiceManager.addService('name',binder) method. This method is not available
+to normal packages installed on a stock phone. For that limitation to be
+worked around it it probably is needed to let the android system (ActivityManager?)
+let create the IBinder object and pass it to the native
+
+
+On the following thread Dianne Hackborn states
+https://groups.google.com/d/topic/android-porting/yK17XZXkupI/discussion
+
+ The Java runtime has wrappers around C++ IBinder.  This is what Java's Binder is.
+ You can write a JNI function that returns a Java Binder and in its implementation
+ instantiate a C++ IBinder interface and return it.  You will need to use this magic
+ function in libandroid_runtime to do this:
+
+  extern jobject javaObjectForIBinder(JNIEnv* env, const sp<IBinder>& val);
+ The header for this is currently in core/jni/android_util_Binder.h.
+
+It will be probably nececary to pass a Binder object created to the native code.
+An other problem might be related to the threading
 
 This code was taken from http://github.com/mcr/Android-HelloWorldService and
 modified to work on gingerbread.
 
 Building/playing around:
 
-See https://github.com/keesj/gomo/wiki/AndroidPlatformDevelopmentWorkflow
+For information about developing "inside" Android
+https://github.com/keesj/gomo/wiki/AndroidPlatformDevelopmentWorkflow
 
 Checkout this this branch into your android platform tree
 . build/envsetup.sh
