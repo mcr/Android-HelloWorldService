@@ -10,19 +10,21 @@
 #include <unistd.h>
 #include <grp.h>
 
-#include <utils/IPCThreadState.h>
-#include <utils/ProcessState.h>
-#include <utils/IServiceManager.h>
+#include <binder/IPCThreadState.h>
+#include <binder/ProcessState.h>
+#include <binder/IServiceManager.h>
 #include <utils/Log.h>
 
 #include "helloworldservice.h"
 
+
 int main(int argc, char *argv[])
 {
-	HelloWorldService::instantiate();
+	android::HelloWorldService::instantiate();
 	android::ProcessState::self()->startThreadPool();
 	LOGI("Hello Service is now ready");
 
 	android::IPCThreadState::self()->joinThreadPool();
 	return(0);
 }
+

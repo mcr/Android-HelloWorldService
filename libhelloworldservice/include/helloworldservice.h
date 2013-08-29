@@ -3,54 +3,57 @@
 
 #include <utils/KeyedVector.h>
 #include <utils/RefBase.h>
-#include <utils/IInterface.h>
-#include <utils/Parcel.h>
+#include <binder/IInterface.h>
+#include <binder/Parcel.h>
 #include <utils/String16.h>
 #include <utils/threads.h>
 #include <string.h>
 
 #include <utils/Log.h>
 
-#include "helloworld.h"
+#include "IHelloWorld.h"
 
-class IHelloWorldService: public android::IInterface {
-public:
+namespace android {
 
-        android_DECLARE_META_INTERFACE(HelloWorldService)
 
-        void hellothere(const char *str);
-};
-
-class BnHelloWorldService : public android::BnInterface<IHelloWorldService>
+/*
+ * The native class implementation extends BnInterface
+ * this is the instance that will be given to the service
+ * manager
+ *
+ * class BnInterface<INTERFACE> extends BBinder
+ *   + queryLocalInterface(descriptor)
+ * BnInterface is the base implementation for a native (local) IInterface
+ * B  stands for Base and "n" for native.
+ *
+ * The BBinder class is the standard implementation of IBinder for a IInterface object
+ * class BBinder extends IBinder
+ *   + getInterfaceDescriptor()
+ *   + attachObject(id ...) // housekeeping of clients
+ *   + findObject(id ...)
+ *   + detachObject(id ...);
+ *
+ * This implementation is kept as simple as possible. if you need more control
+ * over the objects attached to the service you can implement the attachObject/detachObject
+ **/
+class HelloWorldService : public BnInterface<IHelloWorld>
 {
-	// not sure.
-        // actual dispatch.
-};
-
-class HelloWorldService : public BnHelloWorldService
-{
-	class Client;
-
 public:
+    virtual                 ~HelloWorldService(){};
+
     static  void                instantiate();
 
-//    class Client : public BnMediaPlayer {
-//
-//        // IHelloWorld interface
-//    }
+    void hellothere(const char *str);
 
-                            HelloWorldService();
-    virtual                 ~HelloWorldService();
-
-    android::status_t onTransact(uint32_t code,
+    status_t onTransact(uint32_t code,
                                  const android::Parcel &data,
-                                 android::Parcel *reply,
+                                Parcel *reply,
                                  uint32_t flags);
-
-    mutable     android::Mutex                       mLock;
-    android::SortedVector< android::wp<Client> >     mClients;
-    int32_t                     mNextConnId;
+private:
+    /* Private constructor to force the usage the  instantiate method */
+    HelloWorldService(){};
 };
 
+}
 
 #endif

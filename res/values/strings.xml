@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  
-  
   <string name="app_name">HelloWorldService</string>
-  
-  
-  
-
-  
-
-
-
-
-
-
+  <string name="permlab_callHelloTherePermission">Permission to call the hellothere method</string>
+  <string name="permdesc_callHelloTherePermission">Permission to call the hellothere method</string>
 </resources>

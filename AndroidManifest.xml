@@ -3,23 +3,34 @@
       package="org.credil.helloworldservice"
       android:versionCode="1"
       android:versionName="1.0">
+
+    <!-- Define a permission for people to access the native service this should normally
+    happen in a different place. all Binder interface are to be considered public so you always
+    need to take security into account -->
+    <permission android:name="org.credil.helloworldservice.permissions.CALL_HELLOTHERE"
+        android:permissionGroup="android.permission-group.HARDWARE_CONTROLS"
+        android:protectionLevel="dangerous"
+        android:label="@string/permlab_callHelloTherePermission"
+        android:description="@string/permdesc_callHelloTherePermission" />
+
+    <!-- use this permission in the packages -->
+    <uses-permission android:name="org.credil.helloworldservice.permissions.CALL_HELLOTHERE" />
+
     <application android:icon="@drawable/icon" android:label="@string/app_name">
-        <service android:name="HelloWorldService" android:process="org.credil.helloworldservice">
-            <intent-filter>
-                 <action android:name="org.credil.helloworldservice.START_SERVICE"></action>
-             </intent-filter>
-        </service>
-        <activity android:name=".HelloWorld"
+        <activity android:name=".HelloWorldActivity"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Really just a wrapper Service that listens to the IHelloWorld action intent-->
+        <service android:name=".HelloWorldService">
+        <intent-filter>
+            <!-- That the intent name is equal the "descriptor" name is a pure coincidence -->
+            <action android:name="org.credil.helloworldservice.IHelloWorld" />
+        </intent-filter>
+        </service>
     </application>
-
-        <uses-sdk android:minSdkVersion="3" />
-<uses-permission android:name="android.permission.CAMERA"></uses-permission>
-
-<uses-permission android:name="android.permission.INTERNET"></uses-permission>
-</manifest> 
+</manifest>

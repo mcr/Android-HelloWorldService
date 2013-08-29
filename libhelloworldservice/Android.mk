@@ -1,7 +1,5 @@
 LOCAL_PATH := $(call my-dir)
 
-tw_module_tags := eng user
-
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := src/helloworldservice.cpp 
@@ -12,9 +10,9 @@ LOCAL_C_INCLUDES :=         \
 
 LOCAL_CFLAGS += -DPLATFORM_ANDROID
 
-LOCAL_MODULE_TAGS := $(tw_module_tags)
 
 LOCAL_MODULE := libhelloworldservice
+LOCAL_MODULE_TAGS := optional
 
 # for now, until I do a full rebuild.
 LOCAL_PRELINK_MODULE := false
@@ -23,6 +21,7 @@ LOCAL_PRELINK_MODULE := false
 
 LOCAL_SHARED_LIBRARIES += liblog
 LOCAL_SHARED_LIBRARIES += libutils libui
+LOCAL_SHARED_LIBRARIES += libbinder
 
 LOCAL_CFLAGS += -Idalvik/libnativehelper/include/nativehelper
 
